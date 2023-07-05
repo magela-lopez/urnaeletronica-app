@@ -29,7 +29,7 @@ public class Cargos {
     @Column(name = "TurnosPossiveis")
     private int turnosPossiveis;
 
-    @OneToMany(mappedBy = "cargos")
-    private List<Candidato> candidatos;
+//    @OneToMany(mappedBy = "cargos")
+//    private List<Candidatos> candidatos;
 
 }

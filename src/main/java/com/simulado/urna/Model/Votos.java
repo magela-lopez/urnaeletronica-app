@@ -7,8 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @ToString
 @Getter
@@ -26,10 +25,6 @@ public class Votos {
     @Column(name = "Tipo")
     private String tipo;
 
-    @OneToMany(mappedBy = "votos")
-    private List<CandidatosVotos> votos = new ArrayList<>();
-
-    /*
-    @ManyToMany(mappedBy = "votos")
-    public List<Candidato> candidatosList = new ArrayList<>();*/
+//    @ManyToMany(mappedBy = "votos_id")
+//    public Set<CandidatosVotos> candidatosVotos;
 }

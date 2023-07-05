@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "Partidos")
-public class Partido {
+public class Partidos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +23,14 @@ public class Partido {
 
     @Column(name = "Nome_Partido")
     @NotNull
-    private String nome;
+    private String nomePartido;
 
     @Column(name = "Numero_Eleitoral")
     @NotNull
     private String numeroEleitoral;
-
-    @OneToMany(mappedBy = "partido")
-    private List<Candidato> candidatos;
+//
+//    @OneToMany(mappedBy = "partido")
+//    private List<Candidatos> candidatos;
 
 
 }

@@ -1,5 +1,6 @@
 package com.simulado.urna.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.Getter;
@@ -7,7 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
+import java.util.Set;
 
 @ToString
 @Getter
@@ -26,15 +28,19 @@ public class Eleicao {
     private String tipo;
 
     @NotNull
+    @Column(name = "Data")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date data;
+
+    @NotNull
     @Column(name = "Votos_Totais")
     private Long votosTotais;
 
     @NotNull
     @Column(name = "Votos_Habilitados")
-    private Long votosEsperados;
-
-    @OneToMany(mappedBy = "eleicao")
-    private List<CandidatosVotos> votosCandidato;
-
+    private Long votosHabilitados;
+//
+//    @ManyToMany(mappedBy = "eleicao_id")
+//    public Set<CandidatosVotos> candidatosVotosEleicao;
 
 }

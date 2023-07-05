@@ -6,14 +6,11 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 
-import com.simulado.urna.Model.Partido;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @ToString
 @Getter
@@ -21,7 +18,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "Candidatos")
-public class Candidato {
+public class Candidatos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,39 +33,24 @@ public class Candidato {
     @NotNull
     private String numero;
 
-    @Column(name = "Total_Votos")
-    private String total_votos;
-
     @Column(name = "Vice")
     private String vice;
 
-    @Column(name = "Suplente_1")
-    private String suplente1;
-
-    @Column(name = "Suplente_2")
-    private String suplente2;
+    @Column(name = "Total_Votos")
+    private Integer total_votos;
 
     @ManyToOne()
     @JoinColumn(name = "Partidos_id")
-    private Partido partido;
+    @NotNull
+    private Partidos partido;
 
     @ManyToOne()
     @JoinColumn(name = "Cargos_id")
+    @NotNull
     private Cargos cargos;
 
-    //Verificar relacion
-    @ManyToOne()
-    @JoinColumn(name = "Cidade_id")
-    private CidadesCandidatos cidadesCandidatos;
-
-    @ManyToOne()
-    @JoinColumn(name = "Zona_Eleitoral_id")
-    private ZonaEleitoral zonasEleitorais;
-    //
-
-    @OneToMany(mappedBy = "candidato")
-    private List<CandidatosVotos> votosCandidatos = new ArrayList<>();
-
+//    @ManyToMany(mappedBy = "candidato_id")
+//    private Set<CandidatosVotos> votosCandidatos;
 
 
     /*@ManyToMany(cascade = {

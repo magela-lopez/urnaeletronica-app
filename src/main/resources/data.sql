@@ -25,11 +25,6 @@ INSERT INTO partidos VALUES (15, "PSD", 55);
 INSERT INTO partidos VALUES (16, "REPUBLICANOS", 10);
 INSERT INTO partidos VALUES (17, "AVANTE", 70);
 
-/*Inserindo dados na tabela Eleicao*/
-
-INSERT INTO eleicao VALUES(1, DATE('2023-06-27'), "Primeiro Turno", 1000,0);
-INSERT INTO eleicao VALUES(2, DATE('2023-08-01'), "Segundo Turno", 1000,0);
-
 /*Inserindo dados na tabela Candidatos*/
 
 /*Presidencia*/
@@ -81,4 +76,5 @@ INSERT INTO candidatos VALUES(36, "Adelmo Antônio De Souza" ,10110, 0, NULL, 5,
 INSERT INTO candidatos VALUES(37, "Ademar Sarzi Sartori" ,14999, 0, NULL, 5, 6);
 INSERT INTO candidatos VALUES(38, "Admar Eugenio Pozzobom" ,45678, 0, NULL, 5, 12);
 INSERT INTO candidatos VALUES(39, "Adolfo José Brito" ,11240, 0, NULL, 5, 13);
+
 

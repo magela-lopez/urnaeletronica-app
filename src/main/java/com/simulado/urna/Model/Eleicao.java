@@ -1,6 +1,7 @@
 package com.simulado.urna.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.Getter;
@@ -8,10 +9,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
-@ToString
+@ToString(exclude = "votos")
 @Getter
 @Setter
 @Entity
@@ -30,17 +32,32 @@ public class Eleicao {
     @NotNull
     @Column(name = "Data")
     @JsonFormat(pattern="yyyy-MM-dd")
-    private Date data;
+    private LocalDate data;
 
-    @NotNull
+
     @Column(name = "Votos_Totais")
     private Long votosTotais;
+
+    @Column(name = "Votos_Totais_Validos")
+    private Long votosTotaisValidos;
+
+    @Column(name = "Votos_Totais_em_Branco")
+    private Long votosTotaisBrancos;
+
+    @Column(name = "Votos_Totais_Nulo")
+    private Long votosTotaisNulos;
 
     @NotNull
     @Column(name = "Votos_Habilitados")
     private Long votosHabilitados;
-//
-//    @ManyToMany(mappedBy = "eleicao_id")
-//    public Set<CandidatosVotos> candidatosVotosEleicao;
+
+    @Column(name = "Segundo_Necesario")
+    private Boolean isSegundoTurnoNecessário;
+
+    @OneToMany(mappedBy = "eleicao")
+    @JsonIgnore
+    private Set<CandidatosVotos> votos;
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.simulado.urna.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
@@ -10,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 import java.util.Set;
 
 @ToString
@@ -49,18 +51,8 @@ public class Candidatos {
     @NotNull
     private Cargos cargos;
 
-//    @ManyToMany(mappedBy = "candidato_id")
-//    private Set<CandidatosVotos> votosCandidatos;
-
-
-    /*@ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "candidatosvotos",
-            joinColumns = @JoinColumn(name = "candidatos_id"),
-            inverseJoinColumns = @JoinColumn(name = "Votos_id")
-    )
-    private List<Votos> votos = new ArrayList<>();*/
+    @OneToMany(mappedBy = "candidato")
+    @JsonIgnore
+    private Set<CandidatosVotos> votos;
 
 }

@@ -1,5 +1,6 @@
 package com.simulado.urna.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.Getter;
@@ -28,9 +29,10 @@ public class Partidos {
     @Column(name = "Numero_Eleitoral")
     @NotNull
     private String numeroEleitoral;
-//
-//    @OneToMany(mappedBy = "partido")
-//    private List<Candidatos> candidatos;
+
+    @OneToMany(mappedBy = "partido")
+    @JsonIgnore //Para não ter recursividade na hora de serializar o JSON e não ter erro no ListAll
+    private List<Candidatos> candidatos;
 
 
 }

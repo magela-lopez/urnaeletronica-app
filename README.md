@@ -33,7 +33,7 @@ Para executar o projeto, siga as etapas abaixo:
 
 2. Configure o banco de dados MySQL e atualize as informações de conexão no arquivo `application.properties`.
 
-3. Para garantir que o script SQL será executado corretamente verifique que a linha 'spring.sql.init.mode= ' esteja em modo 'always' após o primeiro uso poderá modificar para 'embedded'. Se preferir execute os scripts SQL fornecidos para carregar os candidatos, os partidos e os cargos no banco de dados.
+3. Para garantir que o script SQL será executado corretamente verifique que a linha `spring.sql.init.mode=` esteja em modo `always` após o primeiro uso poderá modificar para `embedded`. Se preferir execute os scripts SQL fornecidos para carregar os candidatos, os partidos e os cargos no banco de dados.
 
 4. Compile e execute o projeto usando o Maven ou sua IDE preferida.
 

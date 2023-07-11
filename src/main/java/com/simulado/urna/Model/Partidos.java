@@ -10,7 +10,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.List;
 
-@ToString
+@ToString(exclude = "candidatos")
 @Getter
 @Setter
 @Entity

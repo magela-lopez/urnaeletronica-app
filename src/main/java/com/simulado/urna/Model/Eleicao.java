@@ -10,7 +10,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 @ToString(exclude = "votos")
@@ -34,7 +33,6 @@ public class Eleicao {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate data;
 
-
     @Column(name = "Votos_Totais")
     private Long votosTotais;
 
@@ -52,6 +50,7 @@ public class Eleicao {
     private Long votosHabilitados;
 
     @Column(name = "Segundo_Necesario")
+    @NotNull
     private Boolean isSegundoTurnoNecessário;
 
     @OneToMany(mappedBy = "eleicao")

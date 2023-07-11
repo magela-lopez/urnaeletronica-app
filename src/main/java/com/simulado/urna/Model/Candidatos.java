@@ -41,6 +41,10 @@ public class Candidatos {
     @Column(name = "Total_Votos")
     private Integer total_votos;
 
+    @Column(name = "Eleito")
+    @NotNull
+    private Boolean eleito;
+
     @ManyToOne()
     @JoinColumn(name = "Partidos_id")
     @NotNull

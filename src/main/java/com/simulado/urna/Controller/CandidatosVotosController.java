@@ -19,19 +19,19 @@ public class CandidatosVotosController {
         return new ResponseEntity<>(candidatosVotosService.inserirVotos(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/resultado")
-    public ResponseEntity<?> getResultadoVotacao(){
-        return new ResponseEntity<>(candidatosVotosService.contagemVotosPorCategoria().toString(), HttpStatus.OK);
+    @GetMapping(path = "/resultado/{eleicao}")
+    public ResponseEntity<?> getResultadoVotacao(@PathVariable String eleicao){
+        return new ResponseEntity<>(candidatosVotosService.contagemVotosPorCategoria(eleicao).toString(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/resultadoCandidato/{candidato}")
-    public ResponseEntity<?> getResultadoVotacaoPorCandidato(@PathVariable String candidato){
-        return new ResponseEntity<>(candidatosVotosService.contagemVotosPorCandidato(candidato), HttpStatus.OK);
+    public ResponseEntity<?> getResultadoVotacaoPorCandidato(@PathVariable String candidato, String eleicao){
+        return new ResponseEntity<>(candidatosVotosService.contagemVotosPorCandidato(candidato, eleicao), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/resultadoCargo/{cargo}")
-    public ResponseEntity<?>getResultadoPorCargo(@PathVariable String cargo){
-        return new ResponseEntity<>(candidatosVotosService.candidatoEleitoPorCargo(cargo), HttpStatus.OK);
+    @GetMapping(path = "/resultadoCargo/{cargo}/{eleicao}")
+    public ResponseEntity<?>getResultadoPorCargo(@PathVariable String cargo, @PathVariable String eleicao){
+        return new ResponseEntity<>(candidatosVotosService.candidatoEleitoPorCargo(cargo, eleicao), HttpStatus.OK);
     }
 
 }

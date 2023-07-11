@@ -146,14 +146,12 @@ public class CandidatosVotosService {
 
         if(eleicao.getTipo().equalsIgnoreCase("Segundo Turno")){
 
-            List<Candidatos> candidatosList = configuracaoSegundoTurno(eleicao);
-
+            List<Candidatos> candidatosList = configuracaoSegundoTurno();
             List<String> cargosVotacao = new ArrayList<>();
             List<Long> idPresidentes = new ArrayList<>();
             List<Long> idGovernadores = new ArrayList<>();
 
             for (Candidatos ca: candidatosList) {
-
                 if(ca.getCargos().getNome().equalsIgnoreCase("Presidente")) {
                     if(!cargosVotacao.contains("Presidente")){cargosVotacao.add("Presidente"); }
                     idPresidentes.add(ca.getId());
@@ -235,14 +233,10 @@ public class CandidatosVotosService {
 
     private void votar(Eleicao eleicao, Long numPresidente){
         Random random = new Random();
-        System.out.println("ENTRANDO NO VOTAR()");
 
             CandidatosVotos candidatosVotos = new CandidatosVotos();
 
             Optional<Candidatos> candidato = candidatosRepository.findById(numPresidente);
-
-        System.out.println("O CANDIDATO SELECCIONADO É" + candidato.get().getNome() + " "+candidato.get().getId() + " " + candidato.get().getCargos());
-
 
         int opcVoto = random.nextInt(3)+1;
 
@@ -252,12 +246,9 @@ public class CandidatosVotosService {
             candidatosVotos.setEleicao(eleicao);
             candidatosVotos.setVoto(votoEnum);
             candidatosVotosRepository.save(candidatosVotos);
-
-        System.out.println("VOLTANDO PARA O COMECAR VOTACAO");
     }
 
-    private List<Candidatos> configuracaoSegundoTurno(Eleicao eleicao) {
-        System.out.println("ENTRANDO NO QUINTO PASSO: CONFIGURAÇÃO");
+    private List<Candidatos> configuracaoSegundoTurno() {
 
         //Uma lista para conter todos os dados de Governador e Presidente, e depois revisar se há algum eleito
         List<Candidatos> candidatosList = new ArrayList<>(candidatosRepository.findAll()); //Coloco todos os candidatos em uma lista e depois com o Stream faço o filtro para trazer só governadores e presidentes
@@ -266,7 +257,6 @@ public class CandidatosVotosService {
                 .filter(candidatos -> candidatos.getCargos().getNome().equals("Presidente") ||
                         candidatos.getCargos().getNome().equals("Governador"))
                 .collect(Collectors.toList());
-
 
 //        for (Candidatos ca:candidatosSegundoTurno) {
 //            System.out.println("ENTRANDO NO FOR");
@@ -290,35 +280,24 @@ public class CandidatosVotosService {
         Cargos cargosG = cargosRepository.findCargosByNomeContainsIgnoreCase("Governador");
 
         if (!presidenteEleito) {
-            System.out.println("ENTRANDO NO IF DO PRESIDENTE ELEITO = FALSE");
             List<ResultadoPorCandidatosDTO> ganhadoresPrimeiroTurnoPres = candidatosVotosRepository.findCandidatosVotosByCargoAndVotoAndEleicao(cargosP.getId(), 1L);
-
-            System.out.println("candidatosSegundoTurnoP.size(): " + ganhadoresPrimeiroTurnoPres.size());
 
             ganhadoresPrimeiroTurnoPres.stream()
                     .limit(2)
                     .map(resultado -> candidatosRepository.findCandidatosByNomeContainsIgnoreCase(resultado.getNome()))
                     .forEach(candidatosList::add);
-
-            for (Candidatos cand: candidatosList) {
-                System.out.println("Presidentes segundo turno: " + cand.getNome() + " " + cand.getCargos());
-            }
         }
 
         if (!governadorEleito) {
-            System.out.println("ENTRANDO NO IF DO GOVERNADOR ELEITO = FALSE");
             List<ResultadoPorCandidatosDTO> ganhadoresPrimeiroTurnoGov = candidatosVotosRepository.findCandidatosVotosByCargoAndVotoAndEleicao(cargosG.getId(), 1L);
 
             ganhadoresPrimeiroTurnoGov.stream()
                     .limit(2)
                     .map(resultado -> candidatosRepository.findCandidatosByNomeContainsIgnoreCase(resultado.getNome()))
                     .forEach(candidatosList::add);
-
-            for (Candidatos cand: candidatosList) {
-                System.out.println("Governadores segundo turno: " + cand.getNome() + " " + cand.getCargos());
-            }
         }
-
+        return candidatosList;
+    }
 //
 //        if(!presidenteEleito){
 //            System.out.println("ENTRANDO NO IF DO PRESIDENTE ELEITO = FALSE");
@@ -354,10 +333,6 @@ public class CandidatosVotosService {
 //                System.out.println("Presidentes segundo turno: " + cand.getNome() + " "+ cand.getCargos());
 //            }
 //        }
-
-        return candidatosList;
-    }
-
     private ResponseEntity<?> eleicaoPresidenteGovernador(Cargos cargos, Eleicao eleicao) throws NumberFormatException{
 
         System.out.println(cargos.getId() +"ID CARGO");
@@ -382,7 +357,7 @@ public class CandidatosVotosService {
         else if( totalVotoCandidato < porcentagemEleitoral & eleicao.getTipo().equalsIgnoreCase("Primeiro turno") ){
             eleicao.setIsSegundoTurnoNecessário(true);
             eleicaoRepository.save(eleicao);
-            configuracaoSegundoTurno(eleicao);
+            configuracaoSegundoTurno();
             return new ResponseEntity<>("Será necessário um segundo turno, nenhum candidato " +
                     "alcançou a porcentagem necessária", HttpStatus.OK);
         }else if(totalVotoCandidato < porcentagemEleitoral & eleicao.getTipo().equalsIgnoreCase("Segundo turno")){
@@ -395,8 +370,5 @@ public class CandidatosVotosService {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
 
 }

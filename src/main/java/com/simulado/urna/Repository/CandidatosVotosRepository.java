@@ -46,4 +46,6 @@ public interface CandidatosVotosRepository extends JpaRepository<CandidatosVotos
 
     Long countCandidatosVotosByVotoAndEleicao(VotoEnum votoEnum, Eleicao eleicao);
 
+    Integer countCandidatosVotosByCandidatoAndEleicao(Candidatos candidatos, Eleicao eleicao);
+
 }

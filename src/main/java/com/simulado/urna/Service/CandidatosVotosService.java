@@ -80,6 +80,15 @@ public class CandidatosVotosService {
         eleicao.setVotosTotais(votosTotais);
         eleicaoRepository.save(eleicao);
 
+        candidatosRepository.findAll().forEach(candidato -> {
+            Integer votosValidosCandidatos =
+                    candidatosVotosRepository.countCandidatosVotosByCandidatoAndEleicao(candidato, eleicao);
+            candidato.setTotal_votos(votosValidosCandidatos);
+            candidatosRepository.save(candidato);
+        });
+
+
+
         return new ResultadoVotacaoDTO(votosValidos, votosBranco, votosNulo);
     }
 
